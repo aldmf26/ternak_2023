@@ -110,6 +110,7 @@ class Penjualan_kardus extends Controller
         $tgl = $r->tgl;
         $id_post = $r->id_post;
         $debit = $r->debit;
+
         DB::table('tb_jurnal')->where('no_nota', 'K-' . $no_nota)->delete();
 
         $data_kredit = [
@@ -126,20 +127,21 @@ class Penjualan_kardus extends Controller
         for ($x = 0; $x < count($id_akun); $x++) {
             $id_akun2 = $id_akun[$x];
             $akun = DB::table('tb_akun')->where('id_akun', $id_akun2)->first();
-            $data_debit = [
-                'tgl' => $tgl,
-                'no_nota' => 'K-' . $no_nota,
-                'id_buku' => '1',
-                'id_akun' => $id_akun[$x],
-                'ket' => 'Penjualan Kardus',
-                'debit' => $debit[$x],
-                'admin' => Auth::user()->name
-            ];
-            DB::table('tb_jurnal')->insert($data_debit);
-
-            if ($akun->id_akun == '54') {
-                DB::table('invoice_kardus')->where('no_nota', $no_nota)->update(['lunas' => 'Y']);
-            } else {
+            if($debit[$x] != '0') {
+                $data_debit = [
+                    'tgl' => $tgl,
+                    'no_nota' => 'K-' . $no_nota,
+                    'id_buku' => '1',
+                    'id_akun' => $id_akun[$x],
+                    'ket' => 'Penjualan Kardus',
+                    'debit' => $debit[$x],
+                    'admin' => Auth::user()->name
+                ];
+                DB::table('tb_jurnal')->insert($data_debit);
+    
+                if ($akun->id_akun == '54') {
+                    DB::table('invoice_kardus')->where('no_nota', $no_nota)->update(['lunas' => 'Y']);
+                }
             }
         }
 
