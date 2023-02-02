@@ -35,7 +35,7 @@ class Penjualan extends Controller
             'tgl2' => $tgl2,
         ];
 
-        return view('penjualan/index', $data);
+        return view('penjualan.index', $data);
     }
     public function add(Request $r)
     {
@@ -151,7 +151,7 @@ class Penjualan extends Controller
             'akun2' => DB::table('tb_akun as a')->join('tb_permission_akun as b', 'a.id_akun', 'b.id_akun')->where('id_sub_menu_akun', '28')->get()
         ];
 
-        return view('penjualan/nota', $data);
+        return view('penjualan.nota', $data);
     }
 
     public function save_jurnal(Request $r)
@@ -161,13 +161,17 @@ class Penjualan extends Controller
         $no_nota = $r->no_nota;
         $tgl = $r->tgl;
         $id_post = $r->id_post;
+
+
         $debit = $r->debit;
 
-        DB::table('tb_jurnal')->where('no_nota', 'T-' . $no_nota)->delete();
+
+
+        DB::table('tb_jurnal')->where('no_nota', 'T' . $no_nota)->delete();
 
         $data_kredit = [
             'tgl' => $tgl,
-            'no_nota' => 'T-' . $no_nota,
+            'no_nota' => 'T' . $no_nota,
             'id_buku' => '1',
             'id_akun' => '18',
             'ket' => 'Penjualan telur',
@@ -180,21 +184,23 @@ class Penjualan extends Controller
         for ($x = 0; $x < count($id_akun); $x++) {
             $id_akun2 = $id_akun[$x];
             $akun = DB::table('tb_akun')->where('id_akun', $id_akun2)->first();
-            $data_debit = [
-                'tgl' => $tgl,
-                'no_nota' => 'T-' . $no_nota,
-                'id_buku' => '1',
-                'id_akun' => $id_akun[$x],
-                'ket' => 'Penjualan telur',
-                'debit' => $debit[$x],
-                'admin' => Auth::user()->name
-            ];
-            DB::table('tb_jurnal')->insert($data_debit);
+            if ($debit[$x] != 0) {
+                $data_debit = [
+                    'tgl' => $tgl,
+                    'no_nota' => 'T' . $no_nota,
+                    'id_buku' => '1',
+                    'id_akun' => $id_akun[$x],
+                    'ket' => 'Penjualan telur',
+                    'debit' => $debit[$x],
+                    'admin' => Auth::user()->name
+                ];
+                DB::table('tb_jurnal')->insert($data_debit);
 
-            if ($akun->id_akun == '31') {
-                DB::table('invoice_telur')->where('no_nota', $no_nota)->update(['lunas' => 'T']);
-            } else {
-                DB::table('invoice_telur')->where('no_nota', $no_nota)->update(['lunas' => 'Y']);
+                if ($akun->id_akun == '31') {
+                    DB::table('invoice_telur')->where('no_nota', $no_nota)->update(['lunas' => 'T']);
+                } else {
+                    DB::table('invoice_telur')->where('no_nota', $no_nota)->update(['lunas' => 'Y']);
+                }
             }
         }
         return redirect()->route("p_telur")->with('sukses', 'Data berhasil di input');
@@ -479,5 +485,36 @@ class Penjualan extends Controller
             'tgl2' => $tgl2,
         ];
         return view('penjualan/export_telur', $data);
+    }
+
+    public function summary(Request $r)
+    {
+        $data = [
+            'title' => 'Summary Penjualan',
+        ];
+        return view('penjualan.summary', $data);
+    }
+
+    public function view_summary(Request $r)
+    {
+        $tgl1 = $r->tgl1;
+        $tgl2 = $r->tgl2;
+
+        $data = [
+            'title' => 'summary',
+            'Penjualan' => DB::select("SELECT a.id_akun, b.nm_akun, SUM(a.debit) AS debit , SUM(a.kredit) AS kredit
+            FROM tb_jurnal AS a
+            LEFT JOIN tb_akun AS b ON b.id_akun = a.id_akun
+            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.id_buku ='1' AND b.id_kategori ='4'
+            GROUP BY a.id_akun"),
+            'uang' => DB::select("SELECT b.id_kategori, a.id_akun, b.nm_akun, SUM(a.debit) AS debit , SUM(a.kredit) AS kredit
+            FROM tb_jurnal AS a
+            LEFT JOIN tb_akun AS b ON b.id_akun = a.id_akun
+            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.id_buku ='1' AND b.id_kategori !='4'
+            GROUP BY a.id_akun"),
+            'tgl1' => $tgl1,
+            'tgl2' => $tgl2
+        ];
+        return view('penjualan.viewsummary', $data);
     }
 }

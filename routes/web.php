@@ -197,6 +197,8 @@ Route::get('/tambah_pembayaran_pupuk', [Penjualan_pupuk::class, 'tambah_pembayar
 Route::post('/edit_kg', [Penjualan::class, 'edit_kg'])->middleware(['auth', 'verified'])->name('edit_kg');
 Route::get('/nota2', [Penjualan::class, 'nota2'])->middleware(['auth', 'verified'])->name('nota2');
 Route::post('/save_jurnal2', [Penjualan::class, 'save_jurnal2'])->middleware(['auth', 'verified'])->name('save_jurnal2');
+Route::get('/summary', [Penjualan::class, 'summary'])->middleware(['auth', 'verified'])->name('summary');
+Route::get('/view_summary', [Penjualan::class, 'view_summary'])->middleware(['auth', 'verified'])->name('view_summary');
 
 // Jurnal Pemasukan
 Route::get('/j_pemasukan', [Jurnal_pemasukan::class, 'index'])->middleware(['auth', 'verified'])->name('j_pemasukan');
