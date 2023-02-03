@@ -110,7 +110,7 @@
                                         <input type="hidden" name="id_akun[]" value="32">
                                     </div>
                                     <div class="col-lg-4 mb-2">
-                                        <input type="text" class="form-control bayar" name="debit[]"
+                                        <input type="text" class="form-control bayar" name="debit[]" value='0'
                                             style="text-align: right" required>
                                     </div>
                                     <div class="col-lg-5"></div>
@@ -119,7 +119,7 @@
                                         <input type="hidden" name="id_akun[]" value="33">
                                     </div>
                                     <div class="col-lg-4 mb-2">
-                                        <input type="text" class="form-control bayar" name="debit[]"
+                                        <input type="text" class="form-control bayar" name="debit[]" value='0'
                                             style="text-align: right" required>
                                     </div>
                                     <div class="col-lg-5"></div>
@@ -128,7 +128,7 @@
                                         <input type="hidden" name="id_akun[]" value="31">
                                     </div>
                                     <div class="col-lg-4 mb-2">
-                                        <input type="text" class="form-control bayar" name="debit[]"
+                                        <input type="text" class="form-control bayar" name="debit[]" value='0'
                                             style="text-align: right" required>
                                     </div>
 

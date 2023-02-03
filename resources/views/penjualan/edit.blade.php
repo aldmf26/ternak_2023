@@ -85,13 +85,13 @@
                                                     </td>
                                                     <td><input type="text"
                                                             class="form-control ikat{{ $j->id_jenis_telur }}"
-                                                            value="{{$j->pcs / 180}}" style="text-align: right"
+                                                            value="{{round($j->pcs / 180,1)}}" style="text-align: right"
                                                             readonly></td>
 
                                                     <td><input name="kg_jual[]" type="text"
                                                             class="form-control  kg_rak{{ $j->id_jenis_telur }}"
-                                                            value="{{ $j->kg - ($j->pcs/180) }}"
-                                                            style="text-align: right" readonly></td>
+                                                            value="{{ $j->kg_jual }}" style="text-align: right"
+                                                            readonly></td>
                                                     <td>
                                                         <input type="text"
                                                             class="form-control rupiah rupiah{{ $j->id_jenis_telur }}"
@@ -108,7 +108,7 @@
                                                     </td>
                                                 </tr>
                                                 @php
-                                                $total += $j->rupiah * ($j->kg - ($j->pcs/180));
+                                                $total += $j->rupiah * $j->kg_jual;
                                                 @endphp
                                                 @endforeach
                                             </tbody>
@@ -271,13 +271,13 @@
 
                 var rupiah = $('.rupiah' + id_jenis).val();
 
-                var bayar = parseInt(rupiah) * parseInt(kg_rak);
+                var bayar = parseFloat(rupiah) * parseFloat(kg_rak);
 
                 $(".hasil" + id_jenis).val(bayar);
 
                 var ttl_rp = 0;
                 $(".hasil").each(function() {
-                    ttl_rp += parseInt($(this).val());
+                    ttl_rp += parseFloat($(this).val());
                 });
 
 

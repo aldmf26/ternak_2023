@@ -106,24 +106,31 @@
                                 <div class="row">
                                     <div class="col-lg-5"></div>
                                     <div class="col-lg-3 mb-2">
-                                        <select name="id_akun[]" id="" class="form-control select" required>
-                                            <option value="">--Pilih Akun--</option>
-                                            <option value="{{$akun->id_akun}}">{{$akun->nm_akun}}</option>
-                                            @foreach ($akun2 as $a)
-                                            <option value="{{$a->id_akun}}">{{$a->nm_akun}}</option>
-                                            @endforeach
-                                        </select>
+                                        <p>BCA</p>
+                                        <input type="hidden" name="id_akun[]" value="32">
                                     </div>
-                                    <div class="col-lg-3 mb-2">
-                                        <input type="text" class="form-control bayar" name="debit[]"
+                                    <div class="col-lg-4 mb-2">
+                                        <input type="text" class="form-control bayar" name="debit[]" value='0'
                                             style="text-align: right" required>
                                     </div>
-                                    <div class="col-lg-1 mb-2">
-                                        <button type="button" class="btn btn-costume btn-sm tbh_pembayaran"><i
-                                                class="fas fa-plus"></i></button>
+                                    <div class="col-lg-5"></div>
+                                    <div class="col-lg-3 mb-2">
+                                        <p>Kas Agri Sinta</p>
+                                        <input type="hidden" name="id_akun[]" value="33">
                                     </div>
-                                </div>
-                                <div id="tambah">
+                                    <div class="col-lg-4 mb-2">
+                                        <input type="text" class="form-control bayar" name="debit[]" value='0'
+                                            style="text-align: right" required>
+                                    </div>
+                                    <div class="col-lg-5"></div>
+                                    <div class="col-lg-3 mb-2">
+                                        <p>Piutang Telur</p>
+                                        <input type="hidden" name="id_akun[]" value="31">
+                                    </div>
+                                    <div class="col-lg-4 mb-2">
+                                        <input type="text" class="form-control bayar" name="debit[]" value='0'
+                                            style="text-align: right" required>
+                                    </div>
 
                                 </div>
                                 <div class="row">

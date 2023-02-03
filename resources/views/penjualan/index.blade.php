@@ -29,10 +29,10 @@
                                 href="{{route('export_invoice',['tgl1'=> $tgl1,'tgl2'=>$tgl2])}}"><i
                                     class="fas fa-file-excel"></i> Export Invoice
                             </a>
-                            <a class="btn btn-costume btn-sm float-right mr-2"
+                            {{-- <a class="btn btn-costume btn-sm float-right mr-2"
                                 href="{{route('export_telur',['tgl1'=> $tgl1,'tgl2'=>$tgl2])}}"><i
                                     class="fas fa-file-excel"></i> Export Telur
-                            </a>
+                            </a> --}}
                             <a class="btn btn-costume btn-sm float-right mr-2" href="#" data-target="#view"
                                 data-toggle="modal"><i class="fas fa-calendar-alt"></i> View
                             </a>
@@ -63,7 +63,7 @@
                                             <td>{{$l++}}</td>
                                             <td>{{date('d-m-Y',strtotime($i->tgl))}}</td>
                                             <td>{{$i->nm_post}} {{$i->urutan}}</td>
-                                            <td>T-{{$i->no_nota}}</td>
+                                            <td>T{{$i->no_nota}}</td>
                                             @foreach ($jenis as $j)
                                             @php
                                             $kg =

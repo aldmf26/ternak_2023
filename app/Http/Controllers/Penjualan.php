@@ -65,7 +65,7 @@ class Penjualan extends Controller
         $nota = DB::selectOne("SELECT max(a.no_nota) as nota FROM invoice_telur as a");
         $rutan = DB::selectOne("SELECT max(a.urutan) as urutan FROM invoice_telur as a where a.id_post = '$id_post'");
         if (empty($nota->nota)) {
-            $no_nota = '1001';
+            $no_nota = '23001';
         } else {
             $no_nota = $nota->nota + 1;
         }
@@ -110,7 +110,7 @@ class Penjualan extends Controller
         $nota = DB::selectOne("SELECT max(a.no_nota) as nota FROM invoice_telur as a");
         $rutan = DB::selectOne("SELECT max(a.urutan) as urutan FROM invoice_telur as a where a.id_post = '$id_post'");
         if (empty($nota->nota)) {
-            $no_nota = '1001';
+            $no_nota = '23001';
         } else {
             $no_nota = $nota->nota + 1;
         }
@@ -221,7 +221,7 @@ class Penjualan extends Controller
     public function delete(Request $r)
     {
         DB::table('invoice_telur')->where('no_nota', $r->nota)->delete();
-        DB::table('tb_jurnal')->where('no_nota', 'T-' . $r->nota)->delete();
+        DB::table('tb_jurnal')->where('no_nota', 'T' . $r->nota)->delete();
         return redirect()->route("p_telur")->with('sukses', 'Data berhasil di hapus');
     }
 
